@@ -1,0 +1,62 @@
+.main {
+  display: flex;
+  height: 100vh;
+}
+
+.imageContent {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  height: 100vh;
+  background-color: blue;
+  background-image: url(/graffiti.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.logo {
+  position: relative;
+  width: 80%;
+  transform: rotate(180deg);
+}
+
+.smallLogo {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 2rem;
+  transform: rotate(180deg);
+}
+
+.title {
+  line-height: 1.15;
+  font-weight: 700;
+  font-size: 4rem;
+  color: white;
+}
+
+.subtitle {
+  color: white;
+  font-size: 1.8rem;
+}
+
+.text {
+  color: white;
+}
+
+.button {
+  width: 150px;
+  border-radius: 20px !important;
+}
+
+.connexionContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 60%;
+  padding: 2rem;
+  background-color: rgb(24, 24, 24);
+}
