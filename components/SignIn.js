@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -7,40 +8,64 @@ import styles from "../styles/SignUp.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
-function SignIn(onClose) {
+function SignIn({ onClose }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [signInFirstname, setSignInFirstname] = useState("");
   const [signInUsername, setSignInUsername] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
 
   const handleSignIn = () => {
     fetch("http://localhost:3000/users/signin", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        firstname: signInFirstname,
         username: signInUsername,
         password: signInPassword,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+
+        // DEBUG : vérifier les données du backend
+        console.log("RÉPONSE SIGNIN :", {
+          result: data.result,
+          userId: data.userId,
+          firstname: data.firstname,
+          username: data.username,
+          hasToken: Boolean(data.token),
+        });
+
         if (data.result) {
+          // Enregistrer l'utilisateur dans Redux
           dispatch(
             login({
-              firstname: signInFirstname,
-              username: signInUsername,
+              userId: data.userId,
+              firstname: data.firstname,
+              username: data.username,
               token: data.token,
-            }),
+            })
           );
-          setSignInFirstname("");
+
+          // Vider les champs
           setSignInUsername("");
           setSignInPassword("");
-          onClose();
+
+          // Fermer la fenêtre de connexion
+          if (typeof onClose === "function") {
+            onClose();
+          }
+
+          // Rediriger vers la page Home
           router.push("/home");
+        } else {
+          console.error("Erreur de connexion :", data.error);
         }
+      })
+      .catch((error) => {
+        console.error("Erreur serveur :", error);
       });
   };
 
@@ -54,14 +79,11 @@ function SignIn(onClose) {
           objectFit="contain"
         />
       </div>
-      <h2 className={styles.subtitle}>Create your Hackatweet account</h2>
-      <input
-        type="Firstname"
-        placeholder="Firstname"
-        id="signInFirstname"
-        onChange={(e) => setSignInFirstname(e.target.value)}
-        value={signInFirstname}
-      />
+
+      <h2 className={styles.subtitle}>
+        Connect to Hackatweet account
+      </h2>
+
       <input
         type="text"
         placeholder="Username"
@@ -69,6 +91,7 @@ function SignIn(onClose) {
         onChange={(e) => setSignInUsername(e.target.value)}
         value={signInUsername}
       />
+
       <input
         type="password"
         placeholder="Password"
@@ -76,6 +99,7 @@ function SignIn(onClose) {
         onChange={(e) => setSignInPassword(e.target.value)}
         value={signInPassword}
       />
+
       <Button
         type="primary"
         className={styles.buttonLight}
@@ -88,3 +112,6 @@ function SignIn(onClose) {
 }
 
 export default SignIn;
+
+
+

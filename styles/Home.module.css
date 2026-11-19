@@ -1,22 +1,145 @@
-.main {
+
+/* CONTENEUR PRINCIPAL */
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #151d2c;
+  color: white;
+}
+
+/* COLONNE GAUCHE */
+.left {
+  width: 23%;
+  padding: 30px;
+  border-right: 1px solid #38444d;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 4rem 0;
+  justify-content: space-between;
 }
 
+/* COLONNE CENTRALE */
+.middle {
+  width: 47%;
+  padding: 30px;
+  border-right: 1px solid #38444d;
+}
+
+/* COLONNE DROITE */
+.right {
+  width: 30%;
+  padding: 30px;
+}
+
+/* TITRES */
 .title {
-  line-height: 1.15;
-  font-size: 4rem;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+/* CHAMP POUR ÉCRIRE UN TWEET */
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-bottom: 1px solid #38444d;
+  padding: 15px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
 }
 
-.title a:hover, .title a:focus, .title a:active {
-  text-decoration: underline;
+/* COMPTEUR ET BOUTON */
+.tweetActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+/* BOUTON TWEET */
+.tweetButton {
+  background-color: #1d9bf0;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tweetButton:hover {
+  background-color: #1684d1;
+}
+
+/* PETITS ÉCRANS */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left,
+  .middle,
+  .right {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #38444d;
+  }
+}
+
+.container h1,
+.container h2 {
+  color: white;
+}
+
+/* LOGO TWITTER INVERSÉ */
+.logoContainer {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+
+/* INFORMATIONS UTILISATEUR */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* PRÉNOM */
+.firstname {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* NOM UTILISATEUR */
+.username {
+  color: #8899a6;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* BOUTON LOGOUT */
+.logoutButton {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.logoutButton:hover {
+  background-color: #263448;
 }

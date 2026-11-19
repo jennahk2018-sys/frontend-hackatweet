@@ -1,5 +1,5 @@
+
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Login.module.css";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
@@ -11,30 +11,50 @@ function Login() {
   const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
   const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
 
+  // Vérifier les composants importés
+  console.log("DEBUG COMPOSANTS :", {
+    Login: typeof Login,
+    SignUp: typeof SignUp,
+    SignIn: typeof SignIn,
+    Modal: typeof Modal,
+    Button: typeof Button,
+  });
+
   return (
     <div>
       <main className={styles.main}>
+        {/* COLONNE GAUCHE */}
         <div className={styles.imageContent}>
           <div className={styles.logo}>
             <Image
               src={logo}
-              alt="Logo twitter"
-              layout="fill"
-              objectFit="contain"
-            ></Image>
-          </div>
-        </div>
-        <div className={styles.connexionContent}>
-          <div className={styles.smallLogo}>
-            <Image
-              src={logo}
-              alt="Logo twitter"
+              alt="Logo Twitter"
               layout="fill"
               objectFit="contain"
             />
           </div>
-          <h1 className={styles.title}>See what's happening</h1>
-          <h2 className={styles.subtitle}>Join Hackatweet today.</h2>
+        </div>
+
+        {/* COLONNE DROITE */}
+        <div className={styles.connexionContent}>
+          <div className={styles.smallLogo}>
+            <Image
+              src={logo}
+              alt="Logo Twitter"
+              layout="fill"
+              objectFit="contain"
+            />
+          </div>
+
+          <h1 className={styles.title}>
+            See what's happening
+          </h1>
+
+          <h2 className={styles.subtitle}>
+            Join Hackatweet today.
+          </h2>
+
+          {/* BOUTON INSCRIPTION */}
           <Button
             type="primary"
             className={styles.buttonDark}
@@ -42,7 +62,12 @@ function Login() {
           >
             Sign up
           </Button>
-          <div className={styles.text}>Already have an account?</div>
+
+          <div className={styles.text}>
+            Already have an account?
+          </div>
+
+          {/* BOUTON CONNEXION */}
           <Button
             className={styles.buttonLight}
             onClick={() => setIsModalSignInVisible(true)}
@@ -51,6 +76,8 @@ function Login() {
           </Button>
         </div>
       </main>
+
+      {/* MODAL INSCRIPTION */}
       <Modal
         open={isModalSignUpVisible}
         onCancel={() => setIsModalSignUpVisible(false)}
@@ -58,9 +85,12 @@ function Login() {
         centered
         className={styles.modal}
       >
-        <SignUp onClose={() => setIsSignUpOpen(false)} />
+        <SignUp
+          onClose={() => setIsModalSignUpVisible(false)}
+        />
       </Modal>
-      ;
+
+      {/* MODAL CONNEXION */}
       <Modal
         open={isModalSignInVisible}
         onCancel={() => setIsModalSignInVisible(false)}
@@ -68,11 +98,13 @@ function Login() {
         centered
         className={styles.modal}
       >
-        <SignIn onClose={() => setIsSignInOpen(false)} />
+        <SignIn
+          onClose={() => setIsModalSignInVisible(false)}
+        />
       </Modal>
-      ;
     </div>
   );
 }
 
 export default Login;
+
