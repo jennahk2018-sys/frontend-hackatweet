@@ -8,7 +8,6 @@
   justify-content: center;
   width: 40%;
   height: 100vh;
-  background-color: blue;
   background-image: url(/graffiti.jpg);
   background-size: cover;
   background-position: center;
@@ -33,21 +32,29 @@
   line-height: 1.15;
   font-weight: 700;
   font-size: 4rem;
-  color: white;
+  color: var(--color-text);
 }
 
 .subtitle {
-  color: white;
-  font-size: 1.8rem;
+  color: var(--color-text);
+  font-size: 2rem;
 }
 
 .text {
-  color: white;
+  color: var(--color-text);
 }
 
-.button {
+.buttonDark {
+  background-color: var(--color-primary) !important;
   width: 150px;
   border-radius: 20px !important;
+}
+
+.buttonLight {
+  background-color: var(--color-background) !important;
+  width: 150px;
+  border-radius: 20px !important;
+  color: var(--color-text) !important;
 }
 
 .connexionContent {
@@ -58,5 +65,5 @@
   gap: 1rem;
   width: 60%;
   padding: 2rem;
-  background-color: rgb(24, 24, 24);
+  background-color: var(--color-background);
 }

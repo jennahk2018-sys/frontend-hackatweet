@@ -1,7 +1,6 @@
 import styles from "../styles/Login.module.css";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
-import "antd/dist/antd.css";
 import { Popover, Button } from "antd";
 
 function Login() {
@@ -29,11 +28,11 @@ function Login() {
           </div>
           <h1 className={styles.title}>See what's happening</h1>
           <h2 className={styles.subtitle}>Join Hackatweet today.</h2>
-          <Button type="primary" className={styles.button}>
+          <Button type="primary" className={styles.buttonDark}>
             Sign up
           </Button>
           <div className={styles.text}>Already have an account?</div>
-          <Button className={styles.button}>Sign in</Button>
+          <Button className={styles.buttonLight}>Sign in</Button>
         </div>
       </main>
     </div>

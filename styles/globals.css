@@ -1,15 +1,24 @@
-body {
-  padding: 0;
-  margin: 0;
-  font-family: Verdana, Geneva, sans-serif;
-}
-
 @font-face {
   font-family: "DM Sans";
   src: url("/fonts/DMSans-Variable.ttf") format("truetype");
   font-weight: 100 1000;
   font-style: normal;
   font-display: swap;
+}
+
+:root {
+  --color-background: #161b2f;
+  --color-background-secondary: #efefef;
+  --color-primary: #3174f1;
+  --color-text: #efefef;
+  --color-text-secondary: #8b98a5;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Verdana, Geneva, sans-serif;
+  color: var(--color-text);
 }
 
 h1,
