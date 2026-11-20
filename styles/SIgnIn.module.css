@@ -20,25 +20,34 @@
   margin: 0 0 1rem;
 }
 
+/* Les champs (Username, et l'enveloppe du Password) */
 .input {
   width: 250px;
-  padding: 0.5rem 0.8rem;
-  background-color: transparent;
-  border: 1px solid var(--color-text-secondary);
-  border-radius: 4px;
-  color: var(--color-text);
-  outline: none;
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-text-secondary) !important;
 }
 
 .input::placeholder {
   color: var(--color-text-secondary);
 }
 
-.input:focus {
-  border-color: var(--color-primary);
+/* Remplissage automatique du navigateur (champ Username) */
+.input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+}
+
+/* Bordure bleue au focus */
+.input:focus,
+.input:global(.ant-input-affix-wrapper-focused) {
+  border-color: var(--color-primary) !important;
 }
 
 .buttonLight {
-  width: 180px;
+  width: 250px;
+  background-color: var(--color-text) !important;
+  color: var(--color-background) !important;
+  border: none !important;
   border-radius: 20px !important;
 }

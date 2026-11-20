@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Button } from "antd";
-import styles from "../styles/SignUp.module.css";
+import { Button, Input } from "antd";
+import styles from "../styles/SignIn.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
@@ -28,7 +27,6 @@ function SignIn({ onClose }) {
     })
       .then((response) => response.json())
       .then((data) => {
-
         // DEBUG : vérifier les données du backend
         console.log("RÉPONSE SIGNIN :", {
           result: data.result,
@@ -46,7 +44,7 @@ function SignIn({ onClose }) {
               firstname: data.firstname,
               username: data.username,
               token: data.token,
-            })
+            }),
           );
 
           // Vider les champs
@@ -80,24 +78,23 @@ function SignIn({ onClose }) {
         />
       </div>
 
-      <h2 className={styles.subtitle}>
-        Connect to Hackatweet account
-      </h2>
+      <h2 className={styles.subtitle}>Connect to Hackatweet account</h2>
 
-      <input
-        type="text"
+      <Input
+        className={styles.input}
         placeholder="Username"
         id="signInUsername"
         onChange={(e) => setSignInUsername(e.target.value)}
         value={signInUsername}
       />
 
-      <input
-        type="password"
+      <Input.Password
+        className={styles.input}
         placeholder="Password"
         id="signInPassword"
         onChange={(e) => setSignInPassword(e.target.value)}
         value={signInPassword}
+        onPressEnter={handleSignIn}
       />
 
       <Button
@@ -112,6 +109,3 @@ function SignIn({ onClose }) {
 }
 
 export default SignIn;
-
-
-

@@ -29,3 +29,28 @@ h2 {
 * {
   box-sizing: border-box;
 }
+
+/* ===== Ant Design : champ mot de passe (Input.Password) ===== */
+
+/* Le champ à l'intérieur de l'enveloppe */
+.ant-input-password input.ant-input {
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+}
+
+/* Le placeholder */
+.ant-input-password input.ant-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+/* L'icône en forme d'œil, en blanc */
+.ant-input-password .ant-input-password-icon,
+.ant-input-password .ant-input-password-icon:hover {
+  color: var(--color-text) !important;
+}
+
+/* Remplissage automatique du navigateur */
+.ant-input-password input.ant-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+}

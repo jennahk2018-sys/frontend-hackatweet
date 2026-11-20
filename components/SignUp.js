@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import styles from "../styles/SignUp.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
-function SignUp({onClose}) {
+function SignUp({ onClose }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -33,6 +33,7 @@ function SignUp({onClose}) {
               firstname: signUpFirstname,
               username: signUpUsername,
               token: data.token,
+              userId: data.userId,
             }),
           );
           setSignUpFirstname("");
@@ -55,26 +56,29 @@ function SignUp({onClose}) {
         />
       </div>
       <h2 className={styles.subtitle}>Create your Hackatweet account</h2>
-      <input
-        type="Firstname"
+      <Input
+        className={styles.input}
         placeholder="Firstname"
         id="signUpFirstname"
         onChange={(e) => setSignUpFirstname(e.target.value)}
         value={signUpFirstname}
       />
-      <input
-        type="text"
+
+      <Input
+        className={styles.input}
         placeholder="Username"
         id="signUpUsername"
         onChange={(e) => setSignUpUsername(e.target.value)}
         value={signUpUsername}
       />
-      <input
-        type="password"
+
+      <Input.Password
+        className={styles.input}
         placeholder="Password"
         id="signUpPassword"
         onChange={(e) => setSignUpPassword(e.target.value)}
         value={signUpPassword}
+        onPressEnter={handleRegister}
       />
       <Button
         type="primary"
