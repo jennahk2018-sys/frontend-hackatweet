@@ -46,8 +46,9 @@
 
 .buttonLight {
   width: 250px;
-  background-color: var(--color-text) !important;
-  color: var(--color-background) !important;
+  background: var(--gradient-sunset) !important;
+  color: var(--color-on-accent) !important;
+  font-weight: 700;
   border: none !important;
   border-radius: 20px !important;
 }
@@ -56,7 +57,7 @@
 .error {
   width: 250px;
   margin: 0;
-  color: #f4212e;
+  color: var(--color-error);
   font-size: 0.9rem;
   text-align: center;
 }

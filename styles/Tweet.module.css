@@ -2,8 +2,16 @@
 /* CONTENEUR DU TWEET */
 .tweet {
   padding: 20px 10px;
-  border-bottom: 1px solid #38444d;
-  color: white;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 10px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Survol : léger fond violet + liseré rose à gauche */
+.tweet:hover {
+  background-color: var(--color-surface);
+  box-shadow: inset 3px 0 0 var(--color-primary);
 }
 
 /* EN-TÊTE DU TWEET */
@@ -19,7 +27,7 @@
   height: 42px;
   min-width: 42px;
   border-radius: 50%;
-  background-color: #4a98d3;
+  background-color: var(--color-avatar-fallback);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +38,7 @@
   width: 22px;
   height: 28px;
   border-radius: 50%;
-  background-color: white;
+  background-color: var(--color-text);
 }
 
 /* INFORMATIONS AUTEUR */
@@ -49,13 +57,13 @@
 
 /* USERNAME */
 .username {
-  color: #8899a6;
+  color: var(--color-text-secondary);
   font-size: 13px;
 }
 
 /* DATE */
 .date {
-  color: #8899a6;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -69,8 +77,9 @@
 
 /* HASHTAGS */
 .hashtag {
-  color: #1d9bf0;
+  color: var(--color-primary);
   font-weight: bold;
+  text-shadow: 0 0 8px rgba(255, 46, 136, 0.45);
 }
 
 /* ACTIONS */
@@ -83,20 +92,20 @@
 .likeButton {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--color-text);
   cursor: pointer;
   font-size: 14px;
   padding: 5px 0;
 }
 
 .likeButton:hover {
-  color: #f91880;
+  color: var(--color-like);
 }
 
 .deleteButton {
   background: transparent;
   border: none;
-  color: #8899a6;
+  color: var(--color-text-secondary);
   cursor: pointer;
   font-size: 16px;
   margin-left: 20px;
@@ -104,7 +113,7 @@
 }
 
 .deleteButton:hover {
-  color: #f4212e;
+  color: var(--color-error);
 }
 
 .deleteButton:disabled {

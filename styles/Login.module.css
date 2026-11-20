@@ -8,9 +8,10 @@
   justify-content: center;
   width: 40%;
   height: 100vh;
-  background-image: url(/graffiti.jpg);
+  background-image: url(/skingta.jpeg);
   background-size: cover;
-  background-position: center;
+  /* "center 20%" : on cale l'image vers le haut pour ne pas couper le visage */
+  background-position: center 20%;
   background-repeat: no-repeat;
 }
 
@@ -32,8 +33,7 @@
 
 .title {
   line-height: 1.15;
-  font-weight: 700;
-  font-size: 4rem;
+  font-size: 5rem;
   color: var(--color-text);
   display: grid; /* permet de superposer le texte fantôme et le texte tapé */
 }
@@ -48,13 +48,24 @@
   visibility: hidden; /* invisible, mais garde sa place */
 }
 
+/* Texte tapé en dégradé coucher de soleil
+   (background-clip: text = le dégradé ne s'affiche qu'à l'intérieur des lettres) */
+.titleTyped {
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none; /* la lueur se fait avec drop-shadow, qui marche avec le dégradé */
+  filter: drop-shadow(0 0 10px rgba(255, 46, 136, 0.45));
+}
+
 .cursor {
   display: inline-block;
   width: 0.06em;
   height: 0.9em;
   margin-left: 0.05em;
   vertical-align: -0.1em;
-  background-color: currentColor;
+  background-color: var(--color-accent); /* currentColor serait transparent à cause du dégradé */
   animation: blink 1s step-end infinite;
 }
 
@@ -66,24 +77,42 @@
 
 .subtitle {
   color: var(--color-text);
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 
 .text {
   color: var(--color-text);
 }
 
+/* BOUTON PRINCIPAL : dégradé néon */
 .buttonDark {
-  background-color: var(--color-primary) !important;
+  background: var(--gradient-sunset) !important;
+  color: var(--color-on-accent) !important;
+  font-weight: 700;
+  border: none !important;
   width: 150px;
   border-radius: 20px !important;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
+.buttonDark:hover {
+  box-shadow: var(--glow-pink);
+  transform: translateY(-1px);
+}
+
+/* BOUTON SECONDAIRE : contour rose néon */
 .buttonLight {
-  background-color: var(--color-background) !important;
+  background-color: transparent !important;
   width: 150px;
+  border: 1px solid var(--color-primary) !important;
   border-radius: 20px !important;
-  color: var(--color-text) !important;
+  color: var(--color-primary) !important;
+  font-weight: 700;
+  transition: box-shadow 0.2s;
+}
+
+.buttonLight:hover {
+  box-shadow: var(--glow-pink);
 }
 
 .connexionContent {
@@ -94,12 +123,16 @@
   gap: 1rem;
   width: 60%;
   padding: 2rem;
-  background-color: var(--color-background);
+  /* Lueur de coucher de soleil qui monte depuis le bas de l'écran */
+  background:
+    radial-gradient(ellipse at 50% 130%, rgba(255, 46, 136, 0.28), transparent 60%),
+    radial-gradient(ellipse at 90% 110%, rgba(255, 138, 61, 0.18), transparent 50%),
+    var(--color-background);
 }
 
+/* Les fenêtres utilisent le style global de globals.css (.ant-modal-content) */
 .modal :global(.ant-modal-content) {
-  background-color: var(--color-background);
-  border-radius: 10px;
+  background-color: var(--color-surface);
 }
 
 .modal :global(.ant-modal-close) {

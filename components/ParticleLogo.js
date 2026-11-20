@@ -21,10 +21,18 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const lerp = (a, b, t) => a + (b - a) * t;
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
+// =====================================
+// COULEURS DU LOGO : dégradé "coucher de soleil" du rose néon à l'orange
+// (mêmes couleurs que --gradient-sunset dans globals.css)
+const COLOR_START = [255, 46, 136]; // rose néon #ff2e88
+const COLOR_END = [255, 138, 61]; // orange soleil #ff8a3d
+const COLOR_STEPS = 8; // nombre de nuances pré-dessinées entre les deux
+
 // Petit point lumineux pré-dessiné une seule fois (beaucoup plus rapide
 // que de dessiner un dégradé pour chaque particule à chaque image).
-// Cœur blanc satiné + halo sombre très doux pour ressortir sur le fond coloré.
-function createDotSprite() {
+// Cœur presque blanc (effet néon) -> couleur -> halo sombre très doux
+// pour que le point ressorte sur l'image colorée.
+function createDotSprite([r, g, b]) {
   const size = 32;
   const sprite = document.createElement("canvas");
   sprite.width = size;
@@ -39,16 +47,29 @@ function createDotSprite() {
     size / 2,
     size / 2,
   );
-  gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-  gradient.addColorStop(0.3, "rgba(248, 246, 240, 0.95)");
-  gradient.addColorStop(0.45, "rgba(220, 218, 212, 0.55)");
-  gradient.addColorStop(0.6, "rgba(10, 12, 24, 0.35)");
-  gradient.addColorStop(1, "rgba(10, 12, 24, 0)");
+  gradient.addColorStop(0, "rgba(255, 240, 248, 1)"); // centre très clair : effet "tube néon"
+  gradient.addColorStop(0.22, `rgba(${r}, ${g}, ${b}, 1)`); // la couleur
+  gradient.addColorStop(0.45, `rgba(${r}, ${g}, ${b}, 0.55)`); // la lueur
+  gradient.addColorStop(0.6, "rgba(18, 10, 36, 0.35)"); // halo violet nuit
+  gradient.addColorStop(1, "rgba(18, 10, 36, 0)");
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, size, size);
 
   return sprite;
+}
+
+// Prépare COLOR_STEPS sprites, du rose à l'orange
+function createGradientSprites() {
+  const sprites = [];
+
+  for (let i = 0; i < COLOR_STEPS; i++) {
+    const t = i / (COLOR_STEPS - 1); // de 0 (rose) à 1 (orange)
+    const color = COLOR_START.map((start, c) => Math.round(start + (COLOR_END[c] - start) * t));
+    sprites.push(createDotSprite(color));
+  }
+
+  return sprites;
 }
 
 // Lit les pixels du logo et renvoie les points opaques,
@@ -167,7 +188,7 @@ function ParticleLogo({ src, alt = "Logo" }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const sprite = createDotSprite();
+    const sprites = createGradientSprites();
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -227,6 +248,11 @@ function ParticleLogo({ src, alt = "Logo" }) {
           vx: 0,
           vy: 0,
           edge: point.edge, // true si le point est sur le contour du logo
+          // Couleur selon la position en diagonale dans le logo :
+          // rose en haut à gauche -> orange en bas à droite
+          colorIndex: Math.round(
+            clamp((point.x + point.y + 1) / 2, 0, 1) * (COLOR_STEPS - 1),
+          ),
           size: 0.5 + Math.random() * 0.8,
           delay: Math.random(), // décalage pour une transformation plus organique
         };
@@ -319,7 +345,7 @@ function ParticleLogo({ src, alt = "Logo" }) {
           0,
           1,
         );
-        ctx.drawImage(sprite, p.x - size / 2, p.y - size / 2, size, size);
+        ctx.drawImage(sprites[p.colorIndex], p.x - size / 2, p.y - size / 2, size, size);
       }
 
       ctx.globalAlpha = 1;

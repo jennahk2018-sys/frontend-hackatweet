@@ -5,16 +5,16 @@
   height: 100%;
 }
 
-/* Léger voile sombre derrière le logo : il ressort mieux sur le graffiti */
+/* Léger voile violet nuit derrière le logo : il ressort mieux sur l'image */
 .wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(10, 12, 24, 0.45) 0%,
-    rgba(10, 12, 24, 0.2) 35%,
-    rgba(10, 12, 24, 0) 60%
+    rgba(18, 10, 36, 0.5) 0%,
+    rgba(18, 10, 36, 0.22) 35%,
+    rgba(18, 10, 36, 0) 60%
   );
   pointer-events: none;
 }

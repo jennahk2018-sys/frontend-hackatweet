@@ -12,7 +12,7 @@
 }
 
 .list::-webkit-scrollbar-thumb {
-  background-color: #38444d;
+  background-color: var(--color-border);
   border-radius: 3px;
 }
 

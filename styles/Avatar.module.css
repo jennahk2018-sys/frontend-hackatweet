@@ -11,12 +11,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #4a98d3;
+  background-color: var(--color-avatar-fallback);
 }
 
 .fallbackHead {
   width: 52%;
   height: 66%;
   border-radius: 50%;
-  background-color: white;
+  background-color: var(--color-text);
 }

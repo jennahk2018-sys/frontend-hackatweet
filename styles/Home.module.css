@@ -4,15 +4,15 @@
   display: flex;
   height: 100vh;        /* la page fait la hauteur de l'écran, pas plus */
   overflow: hidden;     /* seule la liste des tweets défile */
-  background-color: #151d2c;
-  color: white;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 /* COLONNE GAUCHE */
 .left {
   width: 23%;
   padding: 30px;
-  border-right: 1px solid #38444d;
+  border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,7 +22,7 @@
 .middle {
   width: 47%;
   padding: 30px;
-  border-right: 1px solid #38444d;
+  border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;   /* titre, textarea, bouton, puis la liste qui prend le reste */
 }
@@ -34,11 +34,18 @@
   overflow-y: auto;   /* si les trends dépassent, elles défilent aussi */
 }
 
-/* TITRES */
+/* TITRES : "Home" / "Hashtag" en dégradé néon */
 .title {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 44px;
+  line-height: 1;
   margin-bottom: 25px;
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important; /* la règle ".container h1" plus bas forcerait la couleur */
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(255, 46, 136, 0.45));
+  width: fit-content;
 }
 
 /* CHAMP POUR ÉCRIRE UN TWEET */
@@ -46,13 +53,18 @@
   width: 100%;
   min-height: 100px;
   background-color: transparent;
-  color: white;
+  color: var(--color-text);
   border: none;
-  border-bottom: 1px solid #38444d;
+  border-bottom: 1px solid var(--color-border);
   padding: 15px;
   font-size: 16px;
   resize: none;
   outline: none;
+  transition: border-color 0.2s;
+}
+
+.textarea:focus {
+  border-bottom-color: var(--color-primary);
 }
 
 /* COMPTEUR ET BOUTON */
@@ -64,10 +76,10 @@
   margin-top: 15px;
 }
 
-/* BOUTON TWEET */
+/* BOUTON TWEET : dégradé néon */
 .tweetButton {
-  background-color: #1d9bf0;
-  color: white;
+  background: var(--gradient-sunset);
+  color: var(--color-on-accent);
   border: none;
   border-radius: 25px;
   padding: 10px 25px;
@@ -75,8 +87,13 @@
   cursor: pointer;
 }
 
+.tweetButton {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
 .tweetButton:hover {
-  background-color: #1684d1;
+  box-shadow: var(--glow-pink);
+  transform: translateY(-1px);
 }
 
 /* PETITS ÉCRANS */
@@ -92,13 +109,13 @@
   .right {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid #38444d;
+    border-bottom: 1px solid var(--color-border);
   }
 }
 
 .container h1,
 .container h2 {
-  color: white;
+  color: var(--color-text);
 }
 
 /* LOGO TWITTER INVERSÉ */
@@ -121,7 +138,7 @@
 
 /* PRÉNOM */
 .firstname {
-  color: white;
+  color: var(--color-text);
   font-size: 18px;
   font-weight: bold;
   margin: 0;
@@ -129,7 +146,7 @@
 
 /* NOM UTILISATEUR */
 .username {
-  color: #8899a6;
+  color: var(--color-text-secondary);
   font-size: 14px;
   margin-top: 5px;
 }
@@ -137,8 +154,8 @@
 /* BOUTON LOGOUT */
 .logoutButton {
   background-color: transparent;
-  color: white;
-  border: 1px solid white;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
   border-radius: 25px;
   padding: 8px 20px;
   font-weight: bold;
@@ -147,7 +164,9 @@
 }
 
 .logoutButton:hover {
-  background-color: #263448;
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 
@@ -156,20 +175,31 @@
   width: 80%;
   margin: 25px auto;
   padding: 14px 18px;
-  background-color: #1c2633;
+  background-color: var(--color-surface);
   border: none;
   border-radius: 30px;
-  color: white;
+  color: var(--color-text);
   font-size: 16px;
   outline: none;
 }
 
 .hashtagSearch:focus {
-  border: 1px solid #3b82f6;
+  border: 1px solid var(--color-primary);
+  box-shadow: var(--glow-pink);
 }
 
 .noTweets {
   padding: 25px;
   text-align: center;
-  color: #8899a6;
+  color: var(--color-text-secondary);
+}
+/* TRENDS (colonne droite) : les hashtags en rose néon
+   (le composant Trends affiche chaque hashtag dans un <strong>) */
+.right strong {
+  color: var(--color-primary);
+  text-shadow: 0 0 8px rgba(255, 46, 136, 0.45);
+}
+
+.right p {
+  color: var(--color-text-secondary);
 }

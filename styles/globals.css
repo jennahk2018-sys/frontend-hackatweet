@@ -1,3 +1,6 @@
+/* Police des titres : Bebas Neue (Google Fonts, gratuite) */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 @font-face {
   font-family: "DM Sans";
   src: url("/fonts/DMSans-Variable.ttf") format("truetype");
@@ -6,28 +9,76 @@
   font-display: swap;
 }
 
+/* =====================================
+   THÈME "VICE SUNSET"
+   Toutes les couleurs de l'application sont ici.
+   Pour changer de thème, il suffit de modifier ce bloc.
+   ===================================== */
 :root {
-  --color-background: #161b2f;
+  /* Fonds */
+  --color-background: #120a24; /* violet nuit : fond de page */
+  --color-surface: #1e1238; /* cartes, champs, modals */
+  --color-surface-hover: #2a1a4a; /* survol des éléments */
+  --color-border: #3a2a5c; /* lignes de séparation */
+
+  /* Couleurs néon */
+  --color-primary: #ff2e88; /* rose néon : boutons, liens, hashtags */
+  --color-primary-hover: #ff5aa2;
+  --color-accent: #ff8a3d; /* orange soleil */
+  --color-cool: #2de2e6; /* turquoise : likes, focus */
+  --color-like: #2de2e6;
+
+  /* Textes */
+  --color-text: #f5ecff; /* blanc légèrement rosé */
+  --color-text-secondary: #a89cc8; /* lavande : dates, usernames */
+  --color-on-accent: #1a0b2e; /* texte sombre sur les boutons néon (meilleur contraste) */
+
+  /* Divers */
+  --color-error: #ff5c6c;
+  --color-avatar-fallback: #6b3fa0;
   --color-background-secondary: #efefef;
-  --color-primary: #3174f1;
-  --color-text: #efefef;
-  --color-text-secondary: #8b98a5;
+
+  /* Dégradé et lueurs */
+  --gradient-sunset: linear-gradient(135deg, #ff2e88 0%, #ff8a3d 100%);
+  --glow-pink: 0 0 14px rgba(255, 46, 136, 0.55);
+  --glow-text: 0 0 12px rgba(255, 46, 136, 0.7);
+
+  /* Polices */
+  --font-title: "Bebas Neue", "DM Sans", Verdana, sans-serif;
+  --font-text: "DM Sans", Verdana, sans-serif;
 }
 
 body {
   padding: 0;
   margin: 0;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-text);
   color: var(--color-text);
+  background-color: var(--color-background);
 }
 
+/* Titres façon affiche rétro, avec une lueur néon */
 h1,
 h2 {
-  font-family: "DM Sans", Verdana, sans-serif;
+  font-family: var(--font-title);
+  font-weight: 400; /* Bebas Neue n'existe qu'en une seule graisse */
+  letter-spacing: 0.04em;
+  text-shadow: var(--glow-text);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* ===== Ant Design : fenêtres (modals) ===== */
+.ant-modal-content {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  border-radius: 14px !important;
+  box-shadow: var(--glow-pink) !important;
+}
+
+.ant-modal-close {
+  color: var(--color-text) !important;
 }
 
 /* ===== Ant Design : champ mot de passe (Input.Password) ===== */
@@ -43,7 +94,7 @@ h2 {
   color: var(--color-text-secondary);
 }
 
-/* L'icône en forme d'œil, en blanc */
+/* L'icône en forme d'œil */
 .ant-input-password .ant-input-password-icon,
 .ant-input-password .ant-input-password-icon:hover {
   color: var(--color-text) !important;
@@ -51,6 +102,6 @@ h2 {
 
 /* Remplissage automatique du navigateur */
 .ant-input-password input.ant-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset !important;
   -webkit-text-fill-color: var(--color-text) !important;
 }

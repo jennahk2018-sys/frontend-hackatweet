@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -10,7 +9,7 @@ import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import ParticleLogo from "./ParticleLogo";
 
-const TITLE = "See what's happening";
+const TITLE = "Bird is dying...";
 const TYPING_SPEED = 80; // millisecondes entre chaque lettre
 
 function Login() {
@@ -58,7 +57,10 @@ function Login() {
         {/* COLONNE GAUCHE */}
         <div className={styles.imageContent}>
           <div className={styles.logo}>
-            <ParticleLogo src="/logo-twitter-blanc-png.png" alt="Logo Hackatweet" />
+            <ParticleLogo
+              src="/logo-twitter-blanc-png.png"
+              alt="Logo Hackatweet"
+            />
           </div>
         </div>
 
@@ -87,7 +89,7 @@ function Login() {
           </h1>
 
           <h2 className={styles.subtitle}>
-            Join Hackatweet today.
+            but Hackatweet is here to save the day.
           </h2>
 
           {/* BOUTON INSCRIPTION */}
@@ -99,9 +101,7 @@ function Login() {
             Sign up
           </Button>
 
-          <div className={styles.text}>
-            Already have an account?
-          </div>
+          <div className={styles.text}>Already have an account?</div>
 
           {/* BOUTON CONNEXION */}
           <Button
@@ -139,4 +139,3 @@ function Login() {
 }
 
 export default Login;
-

@@ -16,18 +16,18 @@
 }
 
 .avatarButton:hover {
-  border-color: #1d9bf0;
+  border-color: var(--color-primary);
   transform: scale(1.05);
 }
 
 .avatarButton:focus-visible {
-  outline: 2px solid #1d9bf0;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 /* PRÉNOM */
 .firstname {
-  color: white;
+  color: var(--color-text);
   font-size: 18px;
   font-weight: bold;
   margin: 0;
@@ -35,14 +35,14 @@
 
 /* NOM UTILISATEUR */
 .username {
-  color: #8899a6;
+  color: var(--color-text-secondary);
   font-size: 14px;
   margin: 5px 0 0;
 }
 
 /* FENÊTRE DE CHOIX : même thème sombre que les modals de login */
 .modal :global(.ant-modal-content) {
-  background-color: var(--color-background);
+  background-color: var(--color-surface);
   border-radius: 10px;
 }
 
@@ -61,6 +61,6 @@
 /* MESSAGE D'ERREUR */
 .error {
   margin: 16px 0 0;
-  color: #f4212e;
+  color: var(--color-error);
   text-align: center;
 }
