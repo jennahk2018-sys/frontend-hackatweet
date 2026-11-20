@@ -2,7 +2,8 @@
 /* CONTENEUR PRINCIPAL */
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;        /* la page fait la hauteur de l'écran, pas plus */
+  overflow: hidden;     /* seule la liste des tweets défile */
   background-color: #151d2c;
   color: white;
 }
@@ -22,12 +23,15 @@
   width: 47%;
   padding: 30px;
   border-right: 1px solid #38444d;
+  display: flex;
+  flex-direction: column;   /* titre, textarea, bouton, puis la liste qui prend le reste */
 }
 
 /* COLONNE DROITE */
 .right {
   width: 30%;
   padding: 30px;
+  overflow-y: auto;   /* si les trends dépassent, elles défilent aussi */
 }
 
 /* TITRES */
@@ -79,6 +83,8 @@
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    height: auto;
+    overflow: visible;
   }
 
   .left,

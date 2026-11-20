@@ -1,4 +1,5 @@
 import Tweet from './Tweet';
+import styles from '../styles/LastTweets.module.css';
 
 function LastTweets({
   tweets,
@@ -7,7 +8,7 @@ function LastTweets({
   showTitle = true,
 }) {
   return (
-    <div>
+    <div className={styles.list}>
       {showTitle && <h2>Last tweets</h2>}
 
       {tweets.map((tweet) => (

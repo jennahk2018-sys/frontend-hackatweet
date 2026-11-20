@@ -1,0 +1,24 @@
+/* LISTE DES TWEETS QUI DÉFILE */
+.list {
+  flex: 1;            /* prend toute la hauteur restante dans la colonne */
+  min-height: 0;      /* indispensable : sans ça, le scroll ne marche pas en flex */
+  overflow-y: auto;   /* la scrollbar apparaît ici */
+  margin-top: 20px;
+}
+
+/* SCROLLBAR DISCRÈTE */
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #38444d;
+  border-radius: 3px;
+}
+
+/* PETITS ÉCRANS : la page défile normalement */
+@media (max-width: 768px) {
+  .list {
+    overflow-y: visible;
+  }
+}
