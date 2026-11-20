@@ -1,4 +1,4 @@
-hackatweet
+
 import Hashtag from '../../components/Hashtag';
 
 export default function HashtagPage() {
