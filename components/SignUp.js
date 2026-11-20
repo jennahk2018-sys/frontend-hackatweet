@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button, Input } from "antd";
-import styles from "../styles/SignUp.module.css";
+import styles from "../styles/Signup.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
@@ -37,7 +36,7 @@ function SignUp({ onClose }) {
               username: signUpUsername,
               token: data.token,
               userId: data.userId,
-            })
+            }),
           );
 
           setSignUpFirstname("");
@@ -69,9 +68,7 @@ function SignUp({ onClose }) {
         />
       </div>
 
-      <h2 className={styles.subtitle}>
-        Create your Hackatweet account
-      </h2>
+      <h2 className={styles.subtitle}>Create your Hackatweet account</h2>
 
       <Input
         className={styles.input}
@@ -110,4 +107,3 @@ function SignUp({ onClose }) {
 }
 
 export default SignUp;
-
