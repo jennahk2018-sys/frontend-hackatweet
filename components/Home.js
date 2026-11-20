@@ -7,8 +7,11 @@ import LastTweets from "./LastTweets";
 import Trends from "./Trends";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
+import useRequireAuth from "../hooks/useRequireAuth";
 
 function Home() {
+  const isLoggedIn = useRequireAuth();
+
   const [newTweet, setNewTweet] = useState("");
   const [tweets, setTweets] = useState([]);
   const [trends, setTrends] = useState([]);
@@ -121,6 +124,12 @@ function Home() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Pas connecté : on n'affiche rien pendant la redirection
+  // (ce return doit rester APRÈS tous les hooks)
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>

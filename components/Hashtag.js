@@ -7,8 +7,11 @@ import Trends from "./Trends";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
 import styles from "../styles/Home.module.css";
+import useRequireAuth from "../hooks/useRequireAuth";
 
 function Hashtag() {
+  const isLoggedIn = useRequireAuth();
+
   const router = useRouter();
   const { tag } = router.query;
 
@@ -106,6 +109,12 @@ function Hashtag() {
     dispatch(logout());
     router.push("/");
   };
+
+  // Pas connecté : on n'affiche rien pendant la redirection
+  // (ce return doit rester APRÈS tous les hooks)
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>

@@ -1,5 +1,7 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import styles from "../styles/Login.module.css";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
@@ -10,6 +12,17 @@ import SignIn from "./SignIn";
 function Login() {
   const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
   const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
+
+  const router = useRouter();
+  const token = useSelector((state) => state.user.value.token);
+
+  // Déjà connecté en arrivant sur la page : on va directement sur /home
+  // (seulement au chargement : après un login, SignIn/SignUp redirigent déjà)
+  useEffect(() => {
+    if (token) {
+      router.replace("/home");
+    }
+  }, []);
 
   return (
     <div>
