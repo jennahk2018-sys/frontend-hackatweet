@@ -6,6 +6,7 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import user from "../reducers/user";
+import AvatarsContext from "../context/AvatarsContext";
 
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
@@ -56,7 +57,12 @@ function App({ Component, pageProps }) {
       </Head>
 
       <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />
+        {/* pageProps.avatars vient du getStaticProps de la page affichée.
+            Le Provider rend cette liste accessible à tous les composants
+            via useAvatars() (voir context/AvatarsContext.js). */}
+        <AvatarsContext.Provider value={pageProps.avatars || []}>
+          <Component {...pageProps} />
+        </AvatarsContext.Provider>
       </PersistGate>
     </Provider>
   );

@@ -1,0 +1,46 @@
+/* GRILLE DES AVATARS */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* UN AVATAR CLIQUABLE */
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.option:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.option:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+/* AVATAR SÉLECTIONNÉ : bordure bleue */
+.selected {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.label {
+  font-size: 0.8rem;
+}

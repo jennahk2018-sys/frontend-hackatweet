@@ -1,0 +1,22 @@
+/* AVATAR ROND */
+.avatar {
+  display: block;
+  border-radius: 50%;
+  object-fit: cover; /* l'image remplit le rond sans être déformée */
+}
+
+/* SILHOUETTE QUAND IL N'Y A PAS D'AVATAR */
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #4a98d3;
+}
+
+.fallbackHead {
+  width: 52%;
+  height: 66%;
+  border-radius: 50%;
+  background-color: white;
+}

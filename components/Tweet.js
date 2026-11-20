@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import styles from "../styles/Tweet.module.css";
+import Avatar from "./Avatar";
 
 function Tweet({
   id,
@@ -137,9 +138,11 @@ function Tweet({
     <div className={styles.tweet}>
       {/* Auteur */}
       <div className={styles.header}>
-        <div className={styles.avatar}>
-          <div className={styles.avatarHead}></div>
-        </div>
+        <Avatar
+          src={author?.avatar}
+          alt={author?.firstname || author?.username || "Avatar"}
+          size={42}
+        />
 
         <div className={styles.authorInfo}>
           <span className={styles.firstname}>

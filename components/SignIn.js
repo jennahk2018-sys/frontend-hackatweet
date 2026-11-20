@@ -48,6 +48,7 @@ function SignIn({ onClose }) {
               firstname: data.firstname,
               username: data.username,
               token: data.token,
+              avatar: data.avatar,
             }),
           );
 

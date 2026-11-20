@@ -60,3 +60,9 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+/* TEXTE "Choose your avatar" */
+.label {
+  margin: 0;
+  color: var(--color-text-secondary);
+}

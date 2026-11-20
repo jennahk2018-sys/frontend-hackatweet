@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../reducers/user";
 import LastTweets from "./LastTweets";
+import UserProfile from "./UserProfile";
 import Trends from "./Trends";
 import Image from "next/image";
 import logo from "../public/logo-twitter-blanc-png.png";
@@ -134,11 +135,8 @@ function Hashtag() {
         </div>
 
         <div className={styles.userInfo}>
-          <div>
-            <p className={styles.firstname}>{user.firstname}</p>
-
-            <p className={styles.username}>@{user.username}</p>
-          </div>
+          {/* Avatar cliquable + prénom + username */}
+          <UserProfile />
 
           <button className={styles.logoutButton} onClick={handleLogout}>
             Logout

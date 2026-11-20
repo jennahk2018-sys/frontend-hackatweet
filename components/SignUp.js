@@ -6,14 +6,23 @@ import { Button, Input } from "antd";
 import styles from "../styles/Signup.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
+import AvatarPicker from "./AvatarPicker";
+import { useAvatars } from "../context/AvatarsContext";
 
 function SignUp({ onClose }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  // Liste des avatars lue automatiquement dans public/avatar
+  const avatars = useAvatars();
+  // Premier avatar de la liste (ordre alphabétique), ou null si le dossier est vide
+  const defaultAvatar = avatars[0]?.src || null;
+
   const [signUpFirstname, setSignUpFirstname] = useState("");
   const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  // Le premier avatar est sélectionné par défaut
+  const [signUpAvatar, setSignUpAvatar] = useState(defaultAvatar);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleRegister = () => {
@@ -29,6 +38,7 @@ function SignUp({ onClose }) {
         firstname: signUpFirstname,
         username: signUpUsername,
         password: signUpPassword,
+        avatar: signUpAvatar,
       }),
     })
       .then((response) => response.json())
@@ -40,12 +50,14 @@ function SignUp({ onClose }) {
               username: signUpUsername,
               token: data.token,
               userId: data.userId,
+              avatar: data.avatar,
             }),
           );
 
           setSignUpFirstname("");
           setSignUpUsername("");
           setSignUpPassword("");
+          setSignUpAvatar(defaultAvatar);
 
           if (typeof onClose === "function") {
             onClose();
@@ -56,6 +68,8 @@ function SignUp({ onClose }) {
           setErrorMessage("This username is already taken.");
         } else if (data.error === "Missing or empty fields") {
           setErrorMessage("Please fill in all the fields.");
+        } else if (data.error === "Invalid avatar") {
+          setErrorMessage("Please choose an avatar from the list.");
         } else {
           setErrorMessage("Sign up failed. Please try again.");
         }
@@ -78,6 +92,16 @@ function SignUp({ onClose }) {
       </div>
 
       <h2 className={styles.subtitle}>Create your Hackatweet account</h2>
+
+      {/* Choix de l'avatar */}
+      <p className={styles.label}>Choose your avatar</p>
+      <AvatarPicker
+        value={signUpAvatar}
+        onChange={(avatar) => {
+          setSignUpAvatar(avatar);
+          setErrorMessage("");
+        }}
+      />
 
       <Input
         className={styles.input}
