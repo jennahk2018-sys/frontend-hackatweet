@@ -91,15 +91,15 @@ function Hashtag() {
   };
 
   // Filtrer les tweets par hashtag
-  const filteredTweets = tweets.filter((tweet) => {
-    if (typeof tag !== "string") return false;
+  // (la regex est construite une seule fois, pas à chaque tweet)
+  let filteredTweets = [];
 
+  if (typeof tag === "string") {
     const escapedTag = tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
     const regex = new RegExp(`(^|[^\\w])#${escapedTag}(?!\\w)`, "i");
 
-    return regex.test(tweet.content || "");
-  });
+    filteredTweets = tweets.filter((tweet) => regex.test(tweet.content || ""));
+  }
 
   // Déconnexion
   const handleLogout = () => {
@@ -151,7 +151,8 @@ function Hashtag() {
           />
         </form>
 
-        {loading ? (
+        {/* Au premier rendu, Next.js n'a pas encore lu l'URL : tag vaut undefined */}
+        {loading || !router.isReady ? (
           <p>Loading tweets...</p>
         ) : filteredTweets.length > 0 ? (
           <LastTweets
