@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -18,7 +19,9 @@ function SignUp({ onClose }) {
   const handleRegister = () => {
     fetch("http://localhost:3000/users/signup", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         firstname: signUpFirstname,
         username: signUpUsername,
@@ -34,14 +37,24 @@ function SignUp({ onClose }) {
               username: signUpUsername,
               token: data.token,
               userId: data.userId,
-            }),
+            })
           );
+
           setSignUpFirstname("");
           setSignUpUsername("");
           setSignUpPassword("");
-          onClose();
+
+          if (typeof onClose === "function") {
+            onClose();
+          }
+
           router.push("/home");
+        } else {
+          console.error("Erreur inscription :", data.error);
         }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'inscription :", error);
       });
   };
 
@@ -50,12 +63,16 @@ function SignUp({ onClose }) {
       <div className={styles.smallLogo}>
         <Image
           src={logo}
-          alt="Logo twitter"
+          alt="Logo Twitter"
           layout="fill"
           objectFit="contain"
         />
       </div>
-      <h2 className={styles.subtitle}>Create your Hackatweet account</h2>
+
+      <h2 className={styles.subtitle}>
+        Create your Hackatweet account
+      </h2>
+
       <Input
         className={styles.input}
         placeholder="Firstname"
@@ -80,6 +97,7 @@ function SignUp({ onClose }) {
         value={signUpPassword}
         onPressEnter={handleRegister}
       />
+
       <Button
         type="primary"
         className={styles.buttonDark}
@@ -92,3 +110,4 @@ function SignUp({ onClose }) {
 }
 
 export default SignUp;
+

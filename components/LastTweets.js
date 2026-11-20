@@ -1,9 +1,14 @@
 import Tweet from './Tweet';
 
-function LastTweets({ tweets, onDelete, onHashtagClick }) {
+function LastTweets({
+  tweets,
+  onDelete,
+  onHashtagClick,
+  showTitle = true,
+}) {
   return (
     <div>
-      <h2>Last tweets</h2>
+      {showTitle && <h2>Last tweets</h2>}
 
       {tweets.map((tweet) => (
         <Tweet

@@ -1,3 +1,4 @@
+
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
@@ -54,8 +55,6 @@ function Home() {
       .then((data) => {
         if (data.result === true) {
           setTweets(data.tweets);
-
-          // Mettre à jour les tendances
           calculateTrends(data.tweets);
         }
       })
@@ -64,24 +63,13 @@ function Home() {
       });
   };
 
-  // Rechercher les tweets lorsqu'on clique sur un hashtag
+  // Rediriger vers la page du hashtag sélectionné
   const handleHashtagClick = (hashtag) => {
-    const searchTerm = hashtag.replace("#", "");
+    const cleanTag = hashtag.trim().replace(/^#+/, "");
 
-    fetch(
-      `http://localhost:3000/tweets/search?query=${encodeURIComponent(searchTerm)}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result === true) {
-          setTweets(data.tweets);
-        } else {
-          console.error("Erreur recherche :", data.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la recherche :", error);
-      });
+    if (cleanTag) {
+      router.push(`/hashtag/${encodeURIComponent(cleanTag)}`);
+    }
   };
 
   // Publier un tweet
@@ -110,11 +98,9 @@ function Home() {
         if (data.result === true) {
           setNewTweet("");
           console.log("Tweet publié !");
-
-          // Actualiser les tweets et les tendances
           getTweets();
         } else {
-          console.log("Erreur :", data.error);
+          console.error("Erreur publication :", data.error);
         }
       })
       .catch((error) => {
@@ -131,6 +117,7 @@ function Home() {
   // Récupérer les tweets au chargement
   useEffect(() => {
     getTweets();
+
     const interval = setInterval(getTweets, 5000);
 
     return () => clearInterval(interval);
@@ -155,12 +142,19 @@ function Home() {
 
         <div className={styles.userInfo}>
           <div>
-            <p className={styles.firstname}>{user.firstname}</p>
+            <p className={styles.firstname}>
+              {user.firstname}
+            </p>
 
-            <p className={styles.username}>@{user.username}</p>
+            <p className={styles.username}>
+              @{user.username}
+            </p>
           </div>
 
-          <button className={styles.logoutButton} onClick={handleLogout}>
+          <button
+            className={styles.logoutButton}
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </div>
@@ -181,7 +175,10 @@ function Home() {
         <div className={styles.tweetActions}>
           <span>{newTweet.length}/280</span>
 
-          <button className={styles.tweetButton} onClick={handleTweet}>
+          <button
+            className={styles.tweetButton}
+            onClick={handleTweet}
+          >
             Tweet
           </button>
         </div>
@@ -191,12 +188,16 @@ function Home() {
           tweets={tweets}
           onDelete={getTweets}
           onHashtagClick={handleHashtagClick}
+          showTitle={false}
         />
       </section>
 
       {/* COLONNE DROITE */}
       <section className={styles.right}>
-        <Trends trends={trends} onHashtagClick={handleHashtagClick} />
+        <Trends
+          trends={trends}
+          onHashtagClick={handleHashtagClick}
+        />
       </section>
     </div>
   );

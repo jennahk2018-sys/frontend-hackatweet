@@ -121,74 +121,79 @@ function Tweet({
       const data = await response.json();
 
       if (response.ok && data.result === true) {
-        if (onDelete) {
+        if (typeof onDelete === 'function') {
           onDelete();
         }
-      } else {
-        console.error('Erreur suppression :', data.error);
-      }
-    } catch (error) {
-      console.error('Erreur suppression :', error);
-    } finally {
-      setIsDeleting(false);
+    } else {
+      console.error('Erreur suppression :', data.error);
     }
-  };
+  } catch (error) {
+    console.error('Erreur suppression :', error);
+  } finally {
+    setIsDeleting(false);
+  }
+};
 
-  return (
-    <div className={styles.tweet}>
-      {/* Auteur */}
-      <div className={styles.header}>
-        <div className={styles.avatar}>
-          <div className={styles.avatarHead}></div>
-        </div>
 
-        <div className={styles.authorInfo}>
-          <span className={styles.firstname}>
-            {author?.firstname || author?.username || 'Utilisateur'}
-          </span>
-
-          <span className={styles.username}>
-            @{author?.username || 'unknown'}
-          </span>
-
-          <span className={styles.date}>
-            · {getTimeAgo()}
-          </span>
-        </div>
+console.log("Utilisateur Redux :", user);
+console.log("Auteur du tweet :", author);
+console.log("isOwner :", isOwner);
+return (
+  
+  <div className={styles.tweet}>
+    {/* Auteur */}
+    <div className={styles.header}>
+      <div className={styles.avatar}>
+        <div className={styles.avatarHead}></div>
       </div>
 
-      {/* Contenu du tweet */}
-      <p className={styles.content}>
-        {displayContent}
-      </p>
+      <div className={styles.authorInfo}>
+        <span className={styles.firstname}>
+          {author?.firstname || author?.username || 'Utilisateur'}
+        </span>
 
-      {/* Actions */}
-      <div className={styles.actions}>
-        {/* Like */}
-        <button
-          type="button"
-          className={styles.likeButton}
-          onClick={handleLike}
-          disabled={isLiking}
-        >
-          {liked ? '❤️' : '♥'} {likesCount}
-        </button>
+        <span className={styles.username}>
+          @{author?.username || 'unknown'}
+        </span>
 
-        {/* Supprimer uniquement son propre tweet */}
-        {isOwner && (
-          <button
-            type="button"
-            className={styles.deleteButton}
-            onClick={handleDelete}
-            disabled={isDeleting}
-            aria-label="Supprimer le tweet"
-          >
-            <FontAwesomeIcon icon={faTrashCan} />
-          </button>
-        )}
+        <span className={styles.date}>
+          · {getTimeAgo()}
+        </span>
       </div>
     </div>
-  );
+
+    {/* Contenu du tweet */}
+    <p className={styles.content}>
+      {displayContent}
+    </p>
+
+    {/* Actions */}
+    <div className={styles.actions}>
+      {/* Like */}
+      <button
+        type="button"
+        className={styles.likeButton}
+        onClick={handleLike}
+        disabled={isLiking}
+      >
+        {liked ? '❤️' : '♥'} {likesCount}
+      </button>
+
+      {/* Supprimer uniquement son propre tweet */}
+      {isOwner && (
+        <button
+          type="button"
+          className={styles.deleteButton}
+          onClick={handleDelete}
+          disabled={isDeleting}
+          aria-label="Supprimer le tweet"
+        >
+          <FontAwesomeIcon icon={faTrashCan} />
+        </button>
+      )}
+    </div>
+  </div>
+);
 }
 
 export default Tweet;

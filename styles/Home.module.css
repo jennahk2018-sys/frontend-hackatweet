@@ -143,3 +143,27 @@
 .logoutButton:hover {
   background-color: #263448;
 }
+
+
+.hashtagSearch {
+  display: block;
+  width: 80%;
+  margin: 25px auto;
+  padding: 14px 18px;
+  background-color: #1c2633;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.hashtagSearch:focus {
+  border: 1px solid #3b82f6;
+}
+
+.noTweets {
+  padding: 25px;
+  text-align: center;
+  color: #8899a6;
+}
