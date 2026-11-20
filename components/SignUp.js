@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button, Input } from "antd";
-import styles from "../styles/Signup.module.css";
+import styles from "../styles/SignUp.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
