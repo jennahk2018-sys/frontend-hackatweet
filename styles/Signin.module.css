@@ -51,3 +51,12 @@
   border: none !important;
   border-radius: 20px !important;
 }
+
+/* MESSAGE D'ERREUR */
+.error {
+  width: 250px;
+  margin: 0;
+  color: #f4212e;
+  font-size: 0.9rem;
+  text-align: center;
+}

@@ -14,8 +14,12 @@ function SignUp({ onClose }) {
   const [signUpFirstname, setSignUpFirstname] = useState("");
   const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleRegister = () => {
+    // On efface l'ancienne erreur avant chaque tentative
+    setErrorMessage("");
+
     fetch("https://backend-hackatweet-ten.vercel.app/users/signup", {
       method: "POST",
       headers: {
@@ -48,12 +52,17 @@ function SignUp({ onClose }) {
           }
 
           router.push("/home");
+        } else if (data.error === "User already exists") {
+          setErrorMessage("This username is already taken.");
+        } else if (data.error === "Missing or empty fields") {
+          setErrorMessage("Please fill in all the fields.");
         } else {
-          console.error("Erreur inscription :", data.error);
+          setErrorMessage("Sign up failed. Please try again.");
         }
       })
       .catch((error) => {
         console.error("Erreur lors de l'inscription :", error);
+        setErrorMessage("Unable to reach the server. Please try again.");
       });
   };
 
@@ -74,7 +83,10 @@ function SignUp({ onClose }) {
         className={styles.input}
         placeholder="Firstname"
         id="signUpFirstname"
-        onChange={(e) => setSignUpFirstname(e.target.value)}
+        onChange={(e) => {
+          setSignUpFirstname(e.target.value);
+          setErrorMessage("");
+        }}
         value={signUpFirstname}
       />
 
@@ -82,7 +94,10 @@ function SignUp({ onClose }) {
         className={styles.input}
         placeholder="Username"
         id="signUpUsername"
-        onChange={(e) => setSignUpUsername(e.target.value)}
+        onChange={(e) => {
+          setSignUpUsername(e.target.value);
+          setErrorMessage(""); // l'erreur disparaît dès qu'on change d'username
+        }}
         value={signUpUsername}
       />
 
@@ -90,10 +105,20 @@ function SignUp({ onClose }) {
         className={styles.input}
         placeholder="Password"
         id="signUpPassword"
-        onChange={(e) => setSignUpPassword(e.target.value)}
+        onChange={(e) => {
+          setSignUpPassword(e.target.value);
+          setErrorMessage("");
+        }}
         value={signUpPassword}
         onPressEnter={handleRegister}
       />
+
+      {/* Message d'erreur, affiché seulement s'il y en a un */}
+      {errorMessage && (
+        <p className={styles.error} role="alert">
+          {errorMessage}
+        </p>
+      )}
 
       <Button
         type="primary"
