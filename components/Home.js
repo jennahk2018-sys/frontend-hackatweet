@@ -1,16 +1,15 @@
-
-import { useRouter } from 'next/router';
-import styles from '../styles/Home.module.css';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../reducers/user';
-import LastTweets from './LastTweets';
-import Trends from './Trends';
-import Image from 'next/image';
-import logo from '../public/logo-twitter-blanc-png.png';
+import { useRouter } from "next/router";
+import styles from "../styles/Home.module.css";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../reducers/user";
+import LastTweets from "./LastTweets";
+import Trends from "./Trends";
+import Image from "next/image";
+import logo from "../public/logo-twitter-blanc-png.png";
 
 function Home() {
-  const [newTweet, setNewTweet] = useState('');
+  const [newTweet, setNewTweet] = useState("");
   const [tweets, setTweets] = useState([]);
   const [trends, setTrends] = useState([]);
 
@@ -50,9 +49,9 @@ function Home() {
 
   // Récupérer tous les tweets
   const getTweets = () => {
-    fetch('http://localhost:3000/tweets')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://localhost:3000/tweets")
+      .then((response) => response.json())
+      .then((data) => {
         if (data.result === true) {
           setTweets(data.tweets);
 
@@ -60,89 +59,90 @@ function Home() {
           calculateTrends(data.tweets);
         }
       })
-      .catch(error => {
-        console.error('Erreur récupération tweets :', error);
+      .catch((error) => {
+        console.error("Erreur récupération tweets :", error);
       });
   };
 
   // Rechercher les tweets lorsqu'on clique sur un hashtag
   const handleHashtagClick = (hashtag) => {
-    const searchTerm = hashtag.replace('#', '');
+    const searchTerm = hashtag.replace("#", "");
 
     fetch(
-      `http://localhost:3000/tweets/search?query=${encodeURIComponent(searchTerm)}`
+      `http://localhost:3000/tweets/search?query=${encodeURIComponent(searchTerm)}`,
     )
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.result === true) {
           setTweets(data.tweets);
         } else {
-          console.error('Erreur recherche :', data.error);
+          console.error("Erreur recherche :", data.error);
         }
       })
-      .catch(error => {
-        console.error('Erreur lors de la recherche :', error);
+      .catch((error) => {
+        console.error("Erreur lors de la recherche :", error);
       });
   };
 
   // Publier un tweet
   const handleTweet = () => {
-    if (newTweet.trim() === '') {
+    if (newTweet.trim() === "") {
       return;
     }
 
     if (!user.token) {
-      console.log('Utilisateur non connecté');
+      console.log("Utilisateur non connecté");
       return;
     }
 
-    fetch('http://localhost:3000/tweets', {
-      method: 'POST',
+    fetch("http://localhost:3000/tweets", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify({
         content: newTweet,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.result === true) {
-          setNewTweet('');
-          console.log('Tweet publié !');
+          setNewTweet("");
+          console.log("Tweet publié !");
 
           // Actualiser les tweets et les tendances
           getTweets();
         } else {
-          console.log('Erreur :', data.error);
+          console.log("Erreur :", data.error);
         }
       })
-      .catch(error => {
-        console.error('Erreur lors de la publication :', error);
+      .catch((error) => {
+        console.error("Erreur lors de la publication :", error);
       });
   };
 
   // Déconnexion
   const handleLogout = () => {
     dispatch(logout());
-    router.push('/');
+    router.push("/");
   };
 
   // Récupérer les tweets au chargement
   useEffect(() => {
     getTweets();
+    const interval = setInterval(getTweets, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className={styles.container}>
-
       {/* COLONNE GAUCHE */}
       <section className={styles.left}>
-
         <div
           className={styles.logoContainer}
-          onClick={() => router.push('/home')}
+          onClick={() => router.push("/home")}
         >
           <Image
             src={logo}
@@ -155,23 +155,15 @@ function Home() {
 
         <div className={styles.userInfo}>
           <div>
-            <p className={styles.firstname}>
-              {user.firstname}
-            </p>
+            <p className={styles.firstname}>{user.firstname}</p>
 
-            <p className={styles.username}>
-              @{user.username}
-            </p>
+            <p className={styles.username}>@{user.username}</p>
           </div>
 
-          <button
-            className={styles.logoutButton}
-            onClick={handleLogout}
-          >
+          <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
           </button>
         </div>
-
       </section>
 
       {/* COLONNE CENTRALE */}
@@ -189,10 +181,7 @@ function Home() {
         <div className={styles.tweetActions}>
           <span>{newTweet.length}/280</span>
 
-          <button
-            className={styles.tweetButton}
-            onClick={handleTweet}
-          >
+          <button className={styles.tweetButton} onClick={handleTweet}>
             Tweet
           </button>
         </div>
@@ -203,22 +192,14 @@ function Home() {
           onDelete={getTweets}
           onHashtagClick={handleHashtagClick}
         />
-
       </section>
 
       {/* COLONNE DROITE */}
       <section className={styles.right}>
-        <Trends
-          trends={trends}
-          onHashtagClick={handleHashtagClick}
-        />
+        <Trends trends={trends} onHashtagClick={handleHashtagClick} />
       </section>
-
     </div>
   );
 }
 
 export default Home;
-
-
-
