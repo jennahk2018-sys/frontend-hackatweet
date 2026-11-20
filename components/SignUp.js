@@ -7,7 +7,7 @@ import styles from "../styles/SignUp.module.css";
 import logo from "../public/logo-twitter-blanc-png.png";
 import { login } from "../reducers/user";
 
-function SignUp(onClose) {
+function SignUp({onClose}) {
   const dispatch = useDispatch();
   const router = useRouter();
 
