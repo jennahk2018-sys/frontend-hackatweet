@@ -11,15 +11,6 @@ function Login() {
   const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
   const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
 
-  // Vérifier les composants importés
-  console.log("DEBUG COMPOSANTS :", {
-    Login: typeof Login,
-    SignUp: typeof SignUp,
-    SignIn: typeof SignIn,
-    Modal: typeof Modal,
-    Button: typeof Button,
-  });
-
   return (
     <div>
       <main className={styles.main}>
@@ -85,9 +76,7 @@ function Login() {
         centered
         className={styles.modal}
       >
-        <SignUp
-          onClose={() => setIsModalSignUpVisible(false)}
-        />
+        <SignUp onClose={() => setIsModalSignUpVisible(false)} />
       </Modal>
 
       {/* MODAL CONNEXION */}
@@ -98,9 +87,7 @@ function Login() {
         centered
         className={styles.modal}
       >
-        <SignIn
-          onClose={() => setIsModalSignInVisible(false)}
-        />
+        <SignIn onClose={() => setIsModalSignInVisible(false)} />
       </Modal>
     </div>
   );
