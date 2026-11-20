@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
@@ -50,7 +49,7 @@ function Home() {
 
   // Récupérer tous les tweets
   const getTweets = () => {
-    fetch("http://localhost:3000/tweets")
+    fetch("https://backend-hackatweet-ten.vercel.app/tweets")
       .then((response) => response.json())
       .then((data) => {
         if (data.result === true) {
@@ -83,7 +82,7 @@ function Home() {
       return;
     }
 
-    fetch("http://localhost:3000/tweets", {
+    fetch("https://backend-hackatweet-ten.vercel.app/tweets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -142,19 +141,12 @@ function Home() {
 
         <div className={styles.userInfo}>
           <div>
-            <p className={styles.firstname}>
-              {user.firstname}
-            </p>
+            <p className={styles.firstname}>{user.firstname}</p>
 
-            <p className={styles.username}>
-              @{user.username}
-            </p>
+            <p className={styles.username}>@{user.username}</p>
           </div>
 
-          <button
-            className={styles.logoutButton}
-            onClick={handleLogout}
-          >
+          <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
           </button>
         </div>
@@ -175,10 +167,7 @@ function Home() {
         <div className={styles.tweetActions}>
           <span>{newTweet.length}/280</span>
 
-          <button
-            className={styles.tweetButton}
-            onClick={handleTweet}
-          >
+          <button className={styles.tweetButton} onClick={handleTweet}>
             Tweet
           </button>
         </div>
@@ -194,10 +183,7 @@ function Home() {
 
       {/* COLONNE DROITE */}
       <section className={styles.right}>
-        <Trends
-          trends={trends}
-          onHashtagClick={handleHashtagClick}
-        />
+        <Trends trends={trends} onHashtagClick={handleHashtagClick} />
       </section>
     </div>
   );

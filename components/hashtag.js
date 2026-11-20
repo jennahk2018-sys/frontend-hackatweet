@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../reducers/user';
-import LastTweets from './LastTweets';
-import Trends from './Trends';
-import Image from 'next/image';
-import logo from '../public/logo-twitter-blanc-png.png';
-import styles from '../styles/Home.module.css';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../reducers/user";
+import LastTweets from "./LastTweets";
+import Trends from "./Trends";
+import Image from "next/image";
+import logo from "../public/logo-twitter-blanc-png.png";
+import styles from "../styles/Home.module.css";
 
 function Hashtag() {
   const router = useRouter();
@@ -15,7 +15,7 @@ function Hashtag() {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [tweets, setTweets] = useState([]);
   const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ function Hashtag() {
 
   // Récupérer tous les tweets
   const getTweets = () => {
-    fetch('http://localhost:3000/tweets')
+    fetch("https://backend-hackatweet-ten.vercel.app/tweets")
       .then((response) => response.json())
       .then((data) => {
         if (data.result === true) {
@@ -59,7 +59,7 @@ function Hashtag() {
         }
       })
       .catch((error) => {
-        console.error('Erreur récupération tweets :', error);
+        console.error("Erreur récupération tweets :", error);
       })
       .finally(() => setLoading(false));
   };
@@ -70,14 +70,14 @@ function Hashtag() {
 
   // Synchroniser la recherche avec l'URL
   useEffect(() => {
-    if (typeof tag === 'string') {
+    if (typeof tag === "string") {
       setSearch(`#${tag}`);
     }
   }, [tag]);
 
   // Changer de hashtag
   const handleHashtagClick = (hashtag) => {
-    const cleanTag = hashtag.trim().replace(/^#+/, '');
+    const cleanTag = hashtag.trim().replace(/^#+/, "");
 
     if (cleanTag) {
       router.push(`/hashtag/${encodeURIComponent(cleanTag)}`);
@@ -92,35 +92,28 @@ function Hashtag() {
 
   // Filtrer les tweets par hashtag
   const filteredTweets = tweets.filter((tweet) => {
-    if (typeof tag !== 'string') return false;
+    if (typeof tag !== "string") return false;
 
-    const escapedTag = tag.replace(
-      /[.*+?^${}()|[\]\\]/g,
-      '\\$&'
-    );
+    const escapedTag = tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-    const regex = new RegExp(
-      `(^|[^\\w])#${escapedTag}(?!\\w)`,
-      'i'
-    );
+    const regex = new RegExp(`(^|[^\\w])#${escapedTag}(?!\\w)`, "i");
 
-    return regex.test(tweet.content || '');
+    return regex.test(tweet.content || "");
   });
 
   // Déconnexion
   const handleLogout = () => {
     dispatch(logout());
-    router.push('/');
+    router.push("/");
   };
 
   return (
     <div className={styles.container}>
-
       {/* COLONNE GAUCHE */}
       <section className={styles.left}>
         <div
           className={styles.logoContainer}
-          onClick={() => router.push('/home')}
+          onClick={() => router.push("/home")}
         >
           <Image
             src={logo}
@@ -133,19 +126,12 @@ function Hashtag() {
 
         <div className={styles.userInfo}>
           <div>
-            <p className={styles.firstname}>
-              {user.firstname}
-            </p>
+            <p className={styles.firstname}>{user.firstname}</p>
 
-            <p className={styles.username}>
-              @{user.username}
-            </p>
+            <p className={styles.username}>@{user.username}</p>
           </div>
 
-          <button
-            className={styles.logoutButton}
-            onClick={handleLogout}
-          >
+          <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
           </button>
         </div>
@@ -174,18 +160,13 @@ function Hashtag() {
             onHashtagClick={handleHashtagClick}
           />
         ) : (
-          <p className={styles.noTweets}>
-            No tweets found with #{tag}
-          </p>
+          <p className={styles.noTweets}>No tweets found with #{tag}</p>
         )}
       </section>
 
       {/* COLONNE DROITE */}
       <section className={styles.right}>
-        <Trends
-          trends={trends}
-          onHashtagClick={handleHashtagClick}
-        />
+        <Trends trends={trends} onHashtagClick={handleHashtagClick} />
       </section>
     </div>
   );

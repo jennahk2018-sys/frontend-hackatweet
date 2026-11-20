@@ -15,7 +15,7 @@ function SignIn({ onClose }) {
   const [signInPassword, setSignInPassword] = useState("");
 
   const handleSignIn = () => {
-    fetch("http://localhost:3000/users/signin", {
+    fetch("https://backend-hackatweet-ten.vercel.app/users/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
