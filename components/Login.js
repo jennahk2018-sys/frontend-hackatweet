@@ -8,8 +8,15 @@ import logo from "../public/logo-twitter-blanc-png.png";
 import { Modal, Button } from "antd";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import ParticleLogo from "./ParticleLogo";
+
+const TITLE = "See what's happening";
+const TYPING_SPEED = 80; // millisecondes entre chaque lettre
 
 function Login() {
+  // Effet machine à écrire : nombre de lettres déjà affichées
+  const [typedLength, setTypedLength] = useState(0);
+
   const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
   const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
 
@@ -24,18 +31,34 @@ function Login() {
     }
   }, []);
 
+  // Ajoute une lettre au titre à intervalle régulier
+  useEffect(() => {
+    // Si l'utilisateur a désactivé les animations dans son système, on affiche tout direct
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTypedLength(TITLE.length);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTypedLength((length) => {
+        if (length >= TITLE.length) {
+          clearInterval(interval);
+          return length;
+        }
+        return length + 1;
+      });
+    }, TYPING_SPEED);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <main className={styles.main}>
         {/* COLONNE GAUCHE */}
         <div className={styles.imageContent}>
           <div className={styles.logo}>
-            <Image
-              src={logo}
-              alt="Logo Twitter"
-              layout="fill"
-              objectFit="contain"
-            />
+            <ParticleLogo src="/logo-twitter-blanc-png.png" alt="Logo Hackatweet" />
           </div>
         </div>
 
@@ -50,8 +73,17 @@ function Login() {
             />
           </div>
 
-          <h1 className={styles.title}>
-            See what's happening
+          <h1 className={styles.title} aria-label={TITLE}>
+            {/* Texte complet invisible : réserve la place pour que la page ne bouge pas */}
+            <span className={styles.titleGhost} aria-hidden="true">
+              {TITLE}
+            </span>
+
+            {/* Texte qui s'écrit, posé par-dessus, avec le curseur */}
+            <span className={styles.titleTyped} aria-hidden="true">
+              {TITLE.slice(0, typedLength)}
+              <span className={styles.cursor} />
+            </span>
           </h1>
 
           <h2 className={styles.subtitle}>

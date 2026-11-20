@@ -16,8 +16,10 @@
 
 .logo {
   position: relative;
-  width: 80%;
-  transform: rotate(180deg);
+  width: 100%;
+  height: 100%;
+  /* plus de rotate ici : ParticleLogo retourne le logo lui-même,
+     sinon la position de la souris serait inversée */
 }
 
 .smallLogo {
@@ -33,6 +35,33 @@
   font-weight: 700;
   font-size: 4rem;
   color: var(--color-text);
+  display: grid; /* permet de superposer le texte fantôme et le texte tapé */
+}
+
+/* EFFET MACHINE À ÉCRIRE */
+.titleGhost,
+.titleTyped {
+  grid-area: 1 / 1; /* les deux textes occupent la même case */
+}
+
+.titleGhost {
+  visibility: hidden; /* invisible, mais garde sa place */
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.9em;
+  margin-left: 0.05em;
+  vertical-align: -0.1em;
+  background-color: currentColor;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .subtitle {

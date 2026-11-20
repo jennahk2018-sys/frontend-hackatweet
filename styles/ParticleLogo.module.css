@@ -1,0 +1,29 @@
+/* CONTENEUR DU LOGO EN PARTICULES */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Léger voile sombre derrière le logo : il ressort mieux sur le graffiti */
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(10, 12, 24, 0.45) 0%,
+    rgba(10, 12, 24, 0.2) 35%,
+    rgba(10, 12, 24, 0) 60%
+  );
+  pointer-events: none;
+}
+
+.canvas {
+  position: relative; /* au-dessus du voile */
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  touch-action: manipulation;
+}
